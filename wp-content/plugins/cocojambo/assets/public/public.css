@@ -1,0 +1,31 @@
+#slidebox {
+    background-color: #fff;
+    border-top: 3px solid #008374;
+    bottom: 0;
+    box-shadow: 0 -2px 5px #aaa;
+    padding: 15px 15px;
+    position: fixed;
+    right: -101%;
+    width: 30%;
+    z-index: 5;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+#slidebox div {
+    margin-top: 20px;
+}
+
+.slide-title {
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.slide-title > small {
+    float: right;
+    color: #008374;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
