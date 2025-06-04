@@ -36,3 +36,16 @@ function woostify_footer_custom_text() {
     return $content;
 
 }
+add_action( 'after_setup_theme', function () {
+    require_once get_stylesheet_directory() . '/inc/class-my-get-css.php';
+
+    // Видаляємо дію, яка додає метод оригінального класу
+    remove_all_actions( 'enqueue_block_editor_assets' );
+
+    // Ініціалізуємо свій клас
+    $my_woostify_css = new My_Woostify_Get_CSS();
+    add_action( 'enqueue_block_editor_assets', [ $my_woostify_css, 'woostify_guten_block_editor_assets' ] );
+});
+
+
+
