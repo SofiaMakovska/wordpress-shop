@@ -276,6 +276,7 @@ if ( ! function_exists( 'woostify_footer_custom_text' ) ) {
 	 * @return string $content Footer custom text
 	 */
 	function woostify_footer_custom_text() {
+
 		$content = __( 'Copyright &copy; [current_year] [site_title] | Powered by [theme_author]', 'woostify' );
 
 		if ( apply_filters( 'woostify_credit_info', true ) ) {
@@ -1757,7 +1758,7 @@ if ( ! function_exists( 'woostify_topbar_slider' ) ) {
 			$setting = array(
 				'prevNextButtons' => $button,
 			);
-	
+
 			if( $autoplay ){
 				$setting['autoPlay'] = false;
 			}
@@ -1782,16 +1783,16 @@ if ( ! function_exists( 'woostify_topbar_slider' ) ) {
 
 
 		?>
-	
+
 		<div class="topbar-slider">
 			<div class="slider-wrapper">
 				<?php if( $slide_type == 'text-scroll' ): ?>
-					<div class="slider marquee-slider" 
-						data-setting="<?php echo esc_attr(json_encode($setting)); ?>" 
+					<div class="slider marquee-slider"
+						data-setting="<?php echo esc_attr(json_encode($setting)); ?>"
 						data-autoplay="<?php echo esc_attr(json_encode($autoplay)); ?>"
 					>
 						<?php foreach ($topbar_slider_items as $key => $item) {
-							$content = isset($item->name)? $item->name : ''; 
+							$content = isset($item->name)? $item->name : '';
 						?>
 							<div class="slider-item">
 								<div class="text-scroll"><?php echo do_shortcode($content); ?></div>
@@ -1802,7 +1803,7 @@ if ( ! function_exists( 'woostify_topbar_slider' ) ) {
 				<?php else: ?>
 					<div class="slider slick-slider" data-slick="<?php echo esc_attr(json_encode($setting)); ?>">
 						<?php foreach ($topbar_slider_items as $key => $item) {
-							$content = isset($item->name)? $item->name : ''; 
+							$content = isset($item->name)? $item->name : '';
 						?>
 							<div class="slider-item">
 								<div class="text-scroll"><?php echo do_shortcode($content); ?></div>
