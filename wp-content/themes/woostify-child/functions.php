@@ -63,19 +63,33 @@ function my_custom_product_cats_menu() {
         echo '<ul class="my-product-cats">';
 
         foreach ( $terms as $term ) {
+            $image_id  = get_term_meta( $term->term_id, 'thumbnail_id', true );
+            $image_url = $image_id ? wp_get_attachment_url( $image_id ) : get_stylesheet_directory_uri() . '/assets/img/placeholder-cat.webp';
+
+            echo '<li class="my-cat-item">';
+            echo '<a href="' . esc_url( get_term_link( $term ) ) . '">';
+            echo '<img src="' . esc_url( $image_url ) . '" alt="' . esc_attr( $term->name ) . '" class="cat-thumb" />';
+            echo '<span class="cat-title">' . esc_html( $term->name ) . '</span>';
+            echo '</a>';
+
             $subterms = get_terms( [
                 'taxonomy'   => 'product_cat',
                 'hide_empty' => true,
                 'parent'     => $term->term_id,
             ] );
 
-            echo '<li class="my-cat-item">';
-            echo '<a href="' . esc_url( get_term_link( $term ) ) . '">' . esc_html( $term->name ) . '</a>';
-
             if ( ! empty( $subterms ) && ! is_wp_error( $subterms ) ) {
                 echo '<ul class="my-sub-cats">';
                 foreach ( $subterms as $subterm ) {
-                    echo '<li><a href="' . esc_url( get_term_link( $subterm ) ) . '">' . esc_html( $subterm->name ) . '</a></li>';
+                    $sub_image_id  = get_term_meta( $subterm->term_id, 'thumbnail_id', true );
+                    $sub_image_url = $sub_image_id ? wp_get_attachment_url( $sub_image_id ) : get_stylesheet_directory_uri() . '/assets/img/placeholder-cat.webp';
+
+                    echo '<li>';
+                    echo '<a href="' . esc_url( get_term_link( $subterm ) ) . '">';
+                    echo '<img src="' . esc_url( $sub_image_url ) . '" alt="' . esc_attr( $subterm->name ) . '" class="cat-thumb sub-thumb" />';
+                    echo '<span class="cat-title">' . esc_html( $subterm->name ) . '</span>';
+                    echo '</a>';
+                    echo '</li>';
                 }
                 echo '</ul>';
             }
@@ -87,6 +101,7 @@ function my_custom_product_cats_menu() {
         echo '</nav>';
     }
 }
+
 
 
 add_action( 'wp_enqueue_scripts', function () {

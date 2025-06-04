@@ -2230,6 +2230,7 @@ if ( ! function_exists( 'woostify_header_action' ) ) {
 
 		<div class="site-tools">
 
+
 			<?php do_action( 'woostify_site_tool_before_first_item' ); ?>
 
 			<?php // Search icon. ?>
