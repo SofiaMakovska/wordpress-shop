@@ -47,5 +47,57 @@ add_action( 'after_setup_theme', function () {
     add_action( 'enqueue_block_editor_assets', [ $my_woostify_css, 'woostify_guten_block_editor_assets' ] );
 });
 
+add_action( 'woostify_after_header', 'my_custom_product_cats_menu' );
+
+add_action( 'woostify_after_header', 'my_custom_product_cats_menu' );
+
+function my_custom_product_cats_menu() {
+    $terms = get_terms( [
+        'taxonomy'   => 'product_cat',
+        'hide_empty' => true,
+        'parent'     => 0,
+    ] );
+
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        echo '<nav class="my-product-cats-nav">';
+        echo '<ul class="my-product-cats">';
+
+        foreach ( $terms as $term ) {
+            $subterms = get_terms( [
+                'taxonomy'   => 'product_cat',
+                'hide_empty' => true,
+                'parent'     => $term->term_id,
+            ] );
+
+            echo '<li class="my-cat-item">';
+            echo '<a href="' . esc_url( get_term_link( $term ) ) . '">' . esc_html( $term->name ) . '</a>';
+
+            if ( ! empty( $subterms ) && ! is_wp_error( $subterms ) ) {
+                echo '<ul class="my-sub-cats">';
+                foreach ( $subterms as $subterm ) {
+                    echo '<li><a href="' . esc_url( get_term_link( $subterm ) ) . '">' . esc_html( $subterm->name ) . '</a></li>';
+                }
+                echo '</ul>';
+            }
+
+            echo '</li>';
+        }
+
+        echo '</ul>';
+        echo '</nav>';
+    }
+}
+
+
+add_action( 'wp_enqueue_scripts', function () {
+    wp_enqueue_style(
+        'my-custom-header-cats',
+        get_stylesheet_directory_uri() . '/header-cats.css',
+        [],
+        filemtime( get_stylesheet_directory() . '/header-cats.css' )
+    );
+});
+
+
 
 
