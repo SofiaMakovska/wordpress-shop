@@ -3,8 +3,6 @@ services:
     image: wordpress:latest
     container_name: wordpress
     restart: always
-    ports:
-      - "80:80"
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
@@ -12,12 +10,13 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - ./:/var/www/html
+    networks:
+      - filkx_net
 
   db:
     image: 'mysql/mysql-server:8.0'
     container_name: wordpress_db
     restart: always
-#    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
@@ -25,8 +24,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - mysql_data:/var/lib/mysql
-    ports:
-      - '3305:3306'
+    networks:
+      - filkx_net
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -39,6 +38,12 @@ services:
       PMA_USER: wordpress
       PMA_PASSWORD: wordpress
       UPLOAD_LIMIT: 64M
+    networks:
+      - filkx_net
 
 volumes:
   mysql_data:
+
+networks:
+  filkx_net:
+    external: true
